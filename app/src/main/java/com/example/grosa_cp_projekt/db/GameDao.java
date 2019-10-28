@@ -16,7 +16,7 @@ public interface GameDao {
     @Query("SELECT * FROM game")
     List<Game> getAll();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     void insert(Game game);
 
     @Insert

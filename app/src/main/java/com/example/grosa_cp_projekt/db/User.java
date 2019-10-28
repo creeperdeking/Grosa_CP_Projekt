@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private Integer id;
 
     @ColumnInfo(name = "name")
     @NonNull
@@ -26,8 +26,8 @@ public class User implements Serializable {
     @NonNull
     private Integer imageId;
 
-    public User(int id, String name, String surname, Integer imageId) {
-        this.id = id;
+    public User(String name, String surname, Integer imageId) {
+        this.id = null;
         this.imageId = imageId;
         this.name = name;
         this.surname = surname;
@@ -37,11 +37,11 @@ public class User implements Serializable {
      * Getters and Setters
      * */
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

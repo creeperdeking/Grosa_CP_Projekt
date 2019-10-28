@@ -21,11 +21,11 @@ public class Score implements Serializable {
 
     @ColumnInfo(name = "user_id")
     @NonNull
-    private int userId;
+    private Integer userId;
 
     @ColumnInfo(name = "game_id")
     @NonNull
-    private int gameId;
+    private Integer gameId;
 
     @ColumnInfo(name = "score")
     private Integer score;
@@ -34,19 +34,19 @@ public class Score implements Serializable {
      * Getters and Setters
      * */
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getGameId() {
+    public Integer getGameId() {
         return gameId;
     }
 
-    public void setGameId(int gameId) {
+    public void setGameId(Integer gameId) {
         this.gameId = gameId;
     }
 

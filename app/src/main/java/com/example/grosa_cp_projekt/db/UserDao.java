@@ -10,14 +10,16 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import static androidx.room.OnConflictStrategy.IGNORE;
+
 @Dao
 public interface UserDao {
 
     @Query("SELECT * FROM user")
     List<User> getAll();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(User user);
+    @Insert(onConflict = IGNORE)
+    long insert(User user);
 
     @Insert
     long[] insertAll(User... users);

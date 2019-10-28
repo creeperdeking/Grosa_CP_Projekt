@@ -186,7 +186,7 @@ public class ConnectActivity extends AppCompatActivity {
     }
 
     public void onAnonymousClick(View view) {
-        User user = new User(0, "", "", R.drawable.anonymous);
+        User user = new User("", "", R.drawable.anonymous);
         ((MyApplication)getApplication()).setUser(user);
         startChooseGameActivity();
     }

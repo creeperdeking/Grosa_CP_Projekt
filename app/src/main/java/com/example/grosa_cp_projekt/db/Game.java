@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class Game implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private Integer id;
 
     @ColumnInfo(name = "game_name_id")
     @NonNull
@@ -33,8 +33,8 @@ public class Game implements Serializable {
     @NonNull
     private String activityClassname;
 
-    public Game(int id, Integer gameNameId, Integer imageId, Integer explanationId, Integer explanationImageId, String activityClassname) {
-        this.id = id;
+    public Game(Integer imageId, Integer explanationId, Integer explanationImageId, String activityClassname) {
+        this.id = null;
         this.gameNameId = gameNameId;
         this.imageId = imageId;
         this.explanationId = explanationId;
@@ -54,11 +54,11 @@ public class Game implements Serializable {
         this.imageId = imageId;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

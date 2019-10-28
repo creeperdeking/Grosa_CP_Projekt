@@ -41,8 +41,8 @@ public class CreateUserActivity extends AppCompatActivity {
 
                 @Override
                 protected User doInBackground(String... strings) {
-                    User user = new User(0, strings[0], strings[1], R.drawable.user_1);
-                    mDb.getAppDatabase().userDao().insert(user);
+                    User user = new User(strings[0], strings[1], R.drawable.user_1);
+                    user.setId((int) mDb.getAppDatabase().userDao().insert(user));
 
                     return user;
                 }
@@ -70,8 +70,6 @@ public class CreateUserActivity extends AppCompatActivity {
                                 final int idd = id;
                                 Score score = new Score();
                                 score.setScore(0);
-                                System.out.println("gameid: "+game.getId());
-                                System.out.println("userid: "+userCreated.getId());//Todo: bugs, bugs everywere
                                 score.setGameId(game.getId());
                                 score.setUserId(userCreated.getId());
                                 class InsertScore extends AsyncTask<Score, Void, Void> {
