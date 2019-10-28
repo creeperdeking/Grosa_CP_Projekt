@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CFCFCF"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/game_image"
+            android:layout_width="80dp"
+            android:layout_height="130dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/operations" />
+
+        <TextView
+            android:id="@+id/game_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Game_Name"
+            android:textSize="36sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/expTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/explanation"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/expText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="Ce qui n'est pas seulement à désirer pour l'invention d'une infinité d'artifices, qui feraient qu'on jouirait, sans aucune peine, des fruits de la terre et de toutes les commodités qui s'y trouvent, mais principalement aussi pour la conservation de la santé, laquelle est sans doute le premier bien et le..."
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/button_mul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:minHeight="80sp"
+            android:textSize="25sp"
+            android:text="@string/continue_" />
+    </LinearLayout>
+
+</LinearLayout>

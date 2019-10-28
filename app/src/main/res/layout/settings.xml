@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/continue_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:minHeight="80sp"
+        android:onClick="onRemoveUserButtonPushed"
+        android:text="@string/erase_account"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/reset_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:minHeight="80sp"
+        android:onClick="onReinitUserButtonPushed"
+        android:text="@string/reset_account"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:minHeight="60sp"
+        android:onClick="onContinueButtonPushed"
+        android:text="@string/back"
+        android:textSize="25sp" />
+</LinearLayout>
