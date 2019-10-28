@@ -135,13 +135,27 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/check_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="onCheckResultButtonPushed"
         android:text="@string/verify"
         android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0"
+        android:drawableLeft="@drawable/question_smol"
+        android:onClick="onHelpButtonPushed"
+        android:text="@string/help"
+        android:textSize="24sp" />
 
 </LinearLayout>

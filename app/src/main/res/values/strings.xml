@@ -48,6 +48,7 @@
     <string name="operations_sub_question">Soustraie le nombre de gauche avec le nombre de droite, et écris le résultat dans la case de droite.</string>
     <string name="operations_mult_question">Multiplie le nombre de gauche avec le nombre de droite, et écris le résultat dans la case de droite.</string>
     <string name="operations_div_question">Divise le nombre de gauche avec le nombre de droite, et écris le résultat dans la case de droite.</string>
-
+    <string name="help">Aide</string>
     <string name="verify">Vérifier les réponses</string>
+    <string name="never_give_up">Courage! Tu feras mieux la prochaine fois!</string>
 </resources>

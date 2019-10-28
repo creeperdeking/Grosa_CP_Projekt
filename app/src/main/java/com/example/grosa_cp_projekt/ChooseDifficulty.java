@@ -24,7 +24,7 @@ public class ChooseDifficulty extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle activityBundle) {
         super.onCreate(activityBundle);
-        setContentView(R.layout.operations_questions);
+        setContentView(R.layout.operations_game);
 
         activityClassname = getIntent().getStringExtra(LAUNCH_ACTIVITY_NAME_KEY);
         extraParameters = getIntent().getStringExtra(EXTRA_PARAMETERS_KEY);

@@ -20,6 +20,10 @@ public class CongratulationActivity extends AppCompatActivity {
         nbPoints = getIntent().getStringExtra(NB_POINTS_KEY);
         TextView scoreText = findViewById(R.id.score_text);
         scoreText.setText(nbPoints);
+        if (nbPoints.equals("0")) {
+            TextView congratText = findViewById(R.id.congrat_text);
+            congratText.setText(getString(R.string.never_give_up));
+        }
     }
 
     public void onContinueButtonPushed(View view) {

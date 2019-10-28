@@ -56,8 +56,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:minHeight="80sp"
-            android:textSize="25sp"
-            android:text="@string/continue_" />
+            android:onClick="onContinueButtonPushed"
+            android:text="@string/continue_"
+            android:textSize="25sp" />
     </LinearLayout>
 
 </LinearLayout>

@@ -3,20 +3,24 @@ package com.example.grosa_cp_projekt;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.grosa_cp_projekt.db.DatabaseClient;
-import com.example.grosa_cp_projekt.db.Game;
 import com.example.grosa_cp_projekt.db.Score;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static java.lang.Math.ceil;
+import static java.lang.Math.round;
 
 
 public class OperationGameActivity extends GameActivity {
@@ -42,9 +46,13 @@ public class OperationGameActivity extends GameActivity {
         }
 
         public boolean isResultCorrect() {
-            int resultVal = Integer.decode(result.getText().toString());
+            try {
+                int resultVal = Integer.decode(result.getText().toString());
+                return computeResult() == resultVal;
 
-            return computeResult() == resultVal;
+            } catch (Exception ex){
+                return false;
+            }
         }
 
         public Integer computeResult() {
@@ -63,14 +71,15 @@ public class OperationGameActivity extends GameActivity {
         }
     }
 
-    ArrayList<OperationResult> operationResults;
+    ArrayList<OperationResult> operationResults = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle activityBundle) {
         super.onCreate(activityBundle);
-        setContentView(R.layout.operations_questions);
+        setContentView(R.layout.operations_game);
         operation = OperationActivity.Operation.valueOf(getIntent().getStringExtra(EXTRA_PARAMETERS_KEY));
         difficulty = ChooseDifficulty.Difficulty.EASY; //todo: implement real difficulty
+        mDb = DatabaseClient.getInstance(this);
 
         LinearLayout mainLayout = findViewById(R.id.operations_layout);
         int nbOperations = 0;
@@ -120,6 +129,7 @@ public class OperationGameActivity extends GameActivity {
         }
         // Building Layout:
         float factor = this.getResources().getDisplayMetrics().density; // the density factor
+        mainLayout.removeAllViews();
         for (int i = 0; i < nbOperations; i++) {
             int firstNumberVal;
             int secondNumberVal;
@@ -137,6 +147,9 @@ public class OperationGameActivity extends GameActivity {
                     }
                 }
             } while(pairExist);
+            if (operation.equals(OperationActivity.Operation.DIVISION)) {
+                firstNumberVal = firstNumberVal * secondNumberVal;
+            }
 
             LinearLayout.LayoutParams fieldsParameters = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -156,6 +169,7 @@ public class OperationGameActivity extends GameActivity {
             TextView firstNumber = new TextView(this);
             firstNumber.setLayoutParams(fieldsParameters);
             firstNumber.setText(String.valueOf(firstNumberVal));
+            firstNumber.setTextSize(TypedValue.COMPLEX_UNIT_SP, 33);
 
             ImageView operationImg = new ImageView(this);
             operationImg.setLayoutParams(fieldsParameters);
@@ -177,10 +191,12 @@ public class OperationGameActivity extends GameActivity {
             TextView secondNumber = new TextView(this);
             secondNumber.setLayoutParams(fieldsParameters);
             secondNumber.setText(String.valueOf(secondNumberVal));
+            secondNumber.setTextSize(TypedValue.COMPLEX_UNIT_SP, 33);
 
             TextView equals = new TextView(this);
             equals.setLayoutParams(fieldsParameters);
             equals.setText("=");
+            equals.setTextSize(TypedValue.COMPLEX_UNIT_SP, 33);
 
             EditText result = new EditText(this);
             result.setLayoutParams(fieldsParameters);
@@ -200,6 +216,43 @@ public class OperationGameActivity extends GameActivity {
 
     public void onCheckResultButtonPushed(View view) {
         if (reviewMode) {
+            // Update score:
+            class UpdateGameScore extends AsyncTask<Void, Void, List<Score>> {
+                @Override
+                protected List<Score> doInBackground(Void... voids) {
+                    List<Score> scores = mDb.getAppDatabase().scoreDao().getAllUserScore(((MyApplication)getApplication()).getUser().getId());
+                    return scores;
+                }
+
+                @Override
+                protected void onPostExecute(List<Score> scores) {
+                    super.onPostExecute(scores);
+                    for (Score score : scores) {
+                        if (score.getGameId().equals(((MyApplication) getApplication()).getCurrentGame().getId())) {
+                            class SetNewGameScore extends AsyncTask<Score, Void, Void> {
+                                @Override
+                                protected Void doInBackground(Score... score_) {
+                                    Score score = score_[0];
+                                    score.setScore(score.getScore()+scoreFinal);
+                                    mDb.getAppDatabase().scoreDao().update(score);
+                                    return null;
+                                }
+
+                                @Override
+                                protected void onPostExecute(Void voids) {
+                                    super.onPostExecute(voids);
+                                }
+                            }
+                            SetNewGameScore setNewGameScore = new SetNewGameScore();
+                            setNewGameScore.execute(score);
+                            return;
+                        }
+                    }
+                }
+            }
+            UpdateGameScore updateGameScore = new UpdateGameScore();
+            updateGameScore.execute();
+
             Intent intent = new Intent(this, CongratulationActivity.class);
             intent.putExtra(CongratulationActivity.NB_POINTS_KEY, scoreFinal.toString());
             startActivity(intent);
@@ -227,50 +280,15 @@ public class OperationGameActivity extends GameActivity {
                     break;
             }
 
-            // Update score:
-            class UpdateGameScore extends AsyncTask<Void, Void, List<Score>> {
-                @Override
-                protected List<Score> doInBackground(Void... voids) {
-                    List<Score> scores = mDb.getAppDatabase().scoreDao().getAllUserScore(((MyApplication)getApplication()).getUser().getId());
-                    return scores;
-                }
-
-                @Override
-                protected void onPostExecute(List<Score> scores) {
-                    super.onPostExecute(scores);
-                    for (Score score : scores) {
-                        if (score.getGameId() == ((MyApplication)getApplication()).getCurrentGame().getId()) {
-                            class SetNewGameScore extends AsyncTask<Score, Void, Void> {
-                                @Override
-                                protected Void doInBackground(Score... score_) {
-                                    Score score = score_[0];
-                                    score.setScore(score.getScore()+scoreVal);
-                                    mDb.getAppDatabase().scoreDao().update(score);
-                                    return null;
-                                }
-
-                                @Override
-                                protected void onPostExecute(Void voids) {
-                                    super.onPostExecute(voids);
-                                }
-                            }
-                            SetNewGameScore setNewGameScore = new SetNewGameScore();
-                            setNewGameScore.execute();
-                            return;
-                        }
-                    }
-                }
-            }
-            UpdateGameScore updateGameScore = new UpdateGameScore();
-            updateGameScore.execute();
+            scoreFinal = (int)round(ceil(Double.valueOf(scoreVal) * Double.valueOf(operationResults.size() - errorNb)/Double.valueOf(operationResults.size())));
 
             if (errorNb == 0) {
                 Intent intent = new Intent(this, CongratulationActivity.class);
-                intent.putExtra(CongratulationActivity.NB_POINTS_KEY, scoreVal.toString());
+                intent.putExtra(CongratulationActivity.NB_POINTS_KEY, scoreFinal.toString());
                 startActivity(intent);
-
             } else {
-                scoreFinal = scoreVal / errorNb;
+                Button checkButton = findViewById(R.id.check_button);
+                checkButton.setText(getString(R.string.continue_));
                 for (OperationResult operationResult : operationResults) {
                     if (!operationResult.isResultCorrect()) {
                         Integer result = operationResult.computeResult();
@@ -282,6 +300,15 @@ public class OperationGameActivity extends GameActivity {
                 reviewMode = true;
             }
         }
+    }
+
+    public void onHelpButtonPushed(View view) {
+        Intent intent = new Intent(this, ExplanationActivity.class);
+        intent.putExtra(ExplanationActivity.EXPLANATION_TEXT_KEY, getString(R.string.explanation_operation));
+        intent.putExtra(ExplanationActivity.EXPLANATION_TITLE_KEY, getString(R.string.operation_game_name));
+        intent.putExtra(ExplanationActivity.GAME_NAME_KEY, getString(R.string.operation_game_name));
+        intent.putExtra(ExplanationActivity.GAME_IMAGE_ID_KEY, R.drawable.operations);
+        startActivity(intent);
     }
 
     private static int getRandomNumberInRange(int min, int max) {

@@ -17,17 +17,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ConnectActivity">
-        </activity>
-        <activity android:name=".ChooseGameActivity">
-        </activity>
-        <activity android:name=".CreateUserActivity">
-        </activity>
+        <activity android:name=".ConnectActivity"></activity>
+        <activity android:name=".ChooseGameActivity"></activity>
+        <activity android:name=".CreateUserActivity"></activity>
         <activity android:name=".PasswordActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".OperationActivity" />
         <activity android:name=".QuestionsActivity" />
+        <activity android:name=".CongratulationActivity" />
         <activity android:name=".CrosswordsActivity" />
+        <activity android:name=".ExplanationActivity" />
+        <activity android:name=".OperationGameActivity" />
         <activity android:name=".MagicsquareActivity" />
     </application>
 

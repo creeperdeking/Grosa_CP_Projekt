@@ -43,13 +43,17 @@ public class OperationActivity extends AppCompatActivity {
     }
 
     private void launchGame(Operation operation) {
-        String title = getString(game.getGameNameId());
-        String text = getString(game.getExplanationId());
+        Intent intent = new Intent(this, OperationGameActivity.class);
+        intent.putExtra(OperationGameActivity.EXTRA_PARAMETERS_KEY, operation.toString());
+        startActivity(intent);
+    }
+
+    public void onHelpButtonPushed(View view) {
         Intent intent = new Intent(this, ExplanationActivity.class);
-        intent.putExtra(ExplanationActivity.EXPLANATION_TITLE_KEY, title);
-        intent.putExtra(ExplanationActivity.EXPLANATION_TEXT_KEY, text);
-        intent.putExtra(ExplanationActivity.LAUNCH_ACTIVITY_NAME_KEY, "com.example.grosa_cp_projekt.OperationGameActivity");
-        intent.putExtra(ExplanationActivity.EXTRA_PARAMETERS_KEY, operation.toString());
+        intent.putExtra(ExplanationActivity.EXPLANATION_TEXT_KEY, getString(R.string.explanation_operation));
+        intent.putExtra(ExplanationActivity.EXPLANATION_TITLE_KEY, getString(R.string.operation_game_name));
+        intent.putExtra(ExplanationActivity.GAME_NAME_KEY, getString(R.string.operation_game_name));
+        intent.putExtra(ExplanationActivity.GAME_IMAGE_ID_KEY, R.drawable.operations);
         startActivity(intent);
     }
 }
