@@ -21,12 +21,37 @@ import java.util.List;
 
 public class CreateUserActivity extends AppCompatActivity {
     private DatabaseClient mDb;
+    private Integer imageId = R.drawable.user_1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_user);
         mDb = DatabaseClient.getInstance(this);
+    }
+
+    public void onB1(View view) {
+        imageId = R.drawable.avatar_11;
+    }
+
+    public void onB2(View view) {
+        imageId = R.drawable.avatar_5;
+    }
+
+    public void onB3(View view) {
+        imageId = R.drawable.avatar_12;
+    }
+
+    public void onB4(View view) {
+        imageId = R.drawable.avatar_1;
+    }
+
+    public void onB5(View view) {
+        imageId = R.drawable.avatar_3;
+    }
+
+    public void onB6(View view) {
+        imageId = R.drawable.avatar_7;
     }
 
     public void onCreateUserButtonClick(View view) {
@@ -41,8 +66,10 @@ public class CreateUserActivity extends AppCompatActivity {
 
                 @Override
                 protected User doInBackground(String... strings) {
-                    User user = new User(strings[0], strings[1], R.drawable.user_1);
+                    User user = new User(strings[0], strings[1], imageId);
+
                     user.setId((int) mDb.getAppDatabase().userDao().insert(user));
+
 
                     return user;
                 }
