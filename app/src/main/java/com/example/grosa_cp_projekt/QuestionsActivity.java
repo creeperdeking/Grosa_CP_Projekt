@@ -11,7 +11,7 @@ public class QuestionsActivity extends AppCompatActivity {
     enum Topic {
         English,
         History,
-        Gegraphy
+        Geography
     }
 
     @Override
@@ -20,21 +20,21 @@ public class QuestionsActivity extends AppCompatActivity {
         setContentView(R.layout.topic_choice);
     }
 
-    protected void onEnglishButtonPushed(View view) {
-
+    public void onEnglishButtonPushed(View view) {
+        launchGame(Topic.English);
     }
 
-    protected void onHistoryButtonPushed(View view) {
-
+    public void onHistoryButtonPushed(View view) {
+        launchGame(Topic.History);
     }
 
-    protected void onGeographyButtonPushed(View view) {
-
+    public void onGeographyButtonPushed(View view) {
+        launchGame(Topic.Geography);
     }
 
-    private void launchGame(OperationActivity.Operation operation) {
-        Intent intent = new Intent(this, OperationGameActivity.class);
-        intent.putExtra(OperationGameActivity.EXTRA_PARAMETERS_KEY, operation.toString());
+    private void launchGame(Topic topic) {
+        Intent intent = new Intent(this, QuestionGameActivity.class);
+        intent.putExtra(OperationGameActivity.EXTRA_PARAMETERS_KEY, topic.toString());
         startActivity(intent);
     }
 

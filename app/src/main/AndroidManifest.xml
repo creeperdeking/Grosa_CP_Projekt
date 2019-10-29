@@ -25,6 +25,7 @@
         <activity android:name=".OperationActivity" />
         <activity android:name=".QuestionsActivity" />
         <activity android:name=".CongratulationActivity" />
+        <activity android:name=".QuestionGameActivity" />
         <activity android:name=".CrosswordsActivity" />
         <activity android:name=".ExplanationActivity" />
         <activity android:name=".OperationGameActivity" />
