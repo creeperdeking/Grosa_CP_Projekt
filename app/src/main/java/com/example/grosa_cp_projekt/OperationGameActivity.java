@@ -25,8 +25,6 @@ import static java.lang.Math.round;
 
 public class OperationGameActivity extends GameActivity {
 
-    public static final String EXTRA_PARAMETERS_KEY = "extra_parameters_key";
-
     private OperationActivity.Operation operation;
     private ChooseDifficulty.Difficulty difficulty = ChooseDifficulty.Difficulty.EASY;
 
@@ -78,7 +76,7 @@ public class OperationGameActivity extends GameActivity {
         super.onCreate(activityBundle);
         setContentView(R.layout.operations_game);
         operation = OperationActivity.Operation.valueOf(getIntent().getStringExtra(EXTRA_PARAMETERS_KEY));
-        difficulty = ChooseDifficulty.Difficulty.EASY; //todo: implement real difficulty
+        difficulty = ChooseDifficulty.Difficulty.valueOf(getIntent().getStringExtra(DIFFICULTY_KEY));
         mDb = DatabaseClient.getInstance(this);
 
         LinearLayout mainLayout = findViewById(R.id.operations_layout);
@@ -214,48 +212,54 @@ public class OperationGameActivity extends GameActivity {
         }
     }
 
-    public void onCheckResultButtonPushed(View view) {
-        if (reviewMode) {
-            // Update score:
-            class UpdateGameScore extends AsyncTask<Void, Void, List<Score>> {
-                @Override
-                protected List<Score> doInBackground(Void... voids) {
-                    List<Score> scores = mDb.getAppDatabase().scoreDao().getAllUserScore(((MyApplication)getApplication()).getUser().getId());
-                    return scores;
-                }
+    public void finish() {
+        // Update score:
+        class UpdateGameScore extends AsyncTask<Void, Void, List<Score>> {
+            @Override
+            protected List<Score> doInBackground(Void... voids) {
+                List<Score> scores = mDb.getAppDatabase().scoreDao().getAllUserScore(((MyApplication)getApplication()).getUser().getId());
+                return scores;
+            }
 
-                @Override
-                protected void onPostExecute(List<Score> scores) {
-                    super.onPostExecute(scores);
-                    for (Score score : scores) {
-                        if (score.getGameId().equals(((MyApplication) getApplication()).getCurrentGame().getId())) {
-                            class SetNewGameScore extends AsyncTask<Score, Void, Void> {
-                                @Override
-                                protected Void doInBackground(Score... score_) {
-                                    Score score = score_[0];
-                                    score.setScore(score.getScore()+scoreFinal);
-                                    mDb.getAppDatabase().scoreDao().update(score);
-                                    return null;
-                                }
-
-                                @Override
-                                protected void onPostExecute(Void voids) {
-                                    super.onPostExecute(voids);
-                                }
+            @Override
+            protected void onPostExecute(List<Score> scores) {
+                super.onPostExecute(scores);
+                for (Score score : scores) {
+                    if (score.getGameId().equals(((MyApplication) getApplication()).getCurrentGame().getId())) {
+                        class SetNewGameScore extends AsyncTask<Score, Void, Void> {
+                            @Override
+                            protected Void doInBackground(Score... score_) {
+                                Score score = score_[0];
+                                System.out.println("Score");
+                                System.out.println(getString(((MyApplication) getApplication()).getCurrentGame().getGameNameId()));
+                                score.setScore(score.getScore()+scoreFinal);
+                                mDb.getAppDatabase().scoreDao().update(score);
+                                return null;
                             }
-                            SetNewGameScore setNewGameScore = new SetNewGameScore();
-                            setNewGameScore.execute(score);
-                            return;
+
+                            @Override
+                            protected void onPostExecute(Void voids) {
+                                super.onPostExecute(voids);
+                            }
                         }
+                        SetNewGameScore setNewGameScore = new SetNewGameScore();
+                        setNewGameScore.execute(score);
+                        return;
                     }
                 }
             }
-            UpdateGameScore updateGameScore = new UpdateGameScore();
-            updateGameScore.execute();
+        }
+        UpdateGameScore updateGameScore = new UpdateGameScore();
+        updateGameScore.execute();
 
-            Intent intent = new Intent(this, CongratulationActivity.class);
-            intent.putExtra(CongratulationActivity.NB_POINTS_KEY, scoreFinal.toString());
-            startActivity(intent);
+        Intent intent = new Intent(this, CongratulationActivity.class);
+        intent.putExtra(CongratulationActivity.NB_POINTS_KEY, scoreFinal.toString());
+        startActivity(intent);
+    }
+
+    public void onCheckResultButtonPushed(View view) {
+        if (reviewMode) {
+            finish();
         } else {
             int errorNb = 0;
             for (OperationResult operationResult : operationResults) {
@@ -283,9 +287,7 @@ public class OperationGameActivity extends GameActivity {
             scoreFinal = (int)round(ceil(Double.valueOf(scoreVal) * Double.valueOf(operationResults.size() - errorNb)/Double.valueOf(operationResults.size())));
 
             if (errorNb == 0) {
-                Intent intent = new Intent(this, CongratulationActivity.class);
-                intent.putExtra(CongratulationActivity.NB_POINTS_KEY, scoreFinal.toString());
-                startActivity(intent);
+                finish();
             } else {
                 Button checkButton = findViewById(R.id.check_button);
                 checkButton.setText(getString(R.string.continue_));

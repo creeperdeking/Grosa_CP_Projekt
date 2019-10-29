@@ -33,8 +33,9 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     private void launchGame(Topic topic) {
-        Intent intent = new Intent(this, QuestionGameActivity.class);
-        intent.putExtra(OperationGameActivity.EXTRA_PARAMETERS_KEY, topic.toString());
+        Intent intent = new Intent(this, ChooseDifficulty.class);
+        intent.putExtra(ChooseDifficulty.EXTRA_PARAMETERS_KEY, topic.toString());
+        intent.putExtra(ChooseDifficulty.LAUNCH_ACTIVITY_NAME_KEY, QuestionGameActivity.class.getName());
         startActivity(intent);
     }
 

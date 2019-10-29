@@ -24,7 +24,7 @@ public class ChooseDifficulty extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle activityBundle) {
         super.onCreate(activityBundle);
-        setContentView(R.layout.operations_game);
+        setContentView(R.layout.difficulty);
 
         activityClassname = getIntent().getStringExtra(LAUNCH_ACTIVITY_NAME_KEY);
         extraParameters = getIntent().getStringExtra(EXTRA_PARAMETERS_KEY);
@@ -46,8 +46,8 @@ public class ChooseDifficulty extends AppCompatActivity {
 
         try {
             Intent intent = new Intent(this, Class.forName(activityClassname));
-            GameActivity obj = (GameActivity)(Object)Class.forName(activityClassname);
-            intent.putExtra(obj.EXTRA_PARAMETERS_KEY, extraParameters);
+            intent.putExtra(GameActivity.EXTRA_PARAMETERS_KEY, extraParameters);
+            intent.putExtra(GameActivity.DIFFICULTY_KEY, difficulty.toString());
             startActivity(intent);
         } catch (ClassNotFoundException e) {
             Toast toast = Toast.makeText(this, "Game not found", Toast.LENGTH_LONG);

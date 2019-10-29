@@ -43,8 +43,9 @@ public class OperationActivity extends AppCompatActivity {
     }
 
     private void launchGame(Operation operation) {
-        Intent intent = new Intent(this, OperationGameActivity.class);
-        intent.putExtra(OperationGameActivity.EXTRA_PARAMETERS_KEY, operation.toString());
+        Intent intent = new Intent(this, ChooseDifficulty.class);
+        intent.putExtra(ChooseDifficulty.EXTRA_PARAMETERS_KEY, operation.toString());
+        intent.putExtra(ChooseDifficulty.LAUNCH_ACTIVITY_NAME_KEY, OperationGameActivity.class.getName());
         startActivity(intent);
     }
 

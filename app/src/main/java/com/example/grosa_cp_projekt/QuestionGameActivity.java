@@ -17,12 +17,13 @@ import com.example.grosa_cp_projekt.db.DatabaseClient;
 import com.example.grosa_cp_projekt.db.Score;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static java.lang.Math.ceil;
 import static java.lang.Math.round;
 
-public class QuestionGameActivity extends AppCompatActivity {
+public class QuestionGameActivity extends GameActivity {
     public static final String EXTRA_PARAMETERS_KEY = "extra_parameters_key";
 
     private ArrayList<Questions.Question> questions;
@@ -38,11 +39,12 @@ public class QuestionGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_game);
         topic = QuestionsActivity.Topic.valueOf(getIntent().getStringExtra(EXTRA_PARAMETERS_KEY));
-        difficulty = ChooseDifficulty.Difficulty.HARD; //todo: implement real difficulty
+        difficulty = ChooseDifficulty.Difficulty.valueOf(getIntent().getStringExtra(DIFFICULTY_KEY));
         mDb = DatabaseClient.getInstance(this);
         System.out.println("Topic: "+ topic.toString());
 
         questions = Questions.getQuestions(topic, difficulty);
+        Collections.shuffle(questions);
         System.out.println(questions.size());
 
         showQuestion(numCurrentQuestion);
