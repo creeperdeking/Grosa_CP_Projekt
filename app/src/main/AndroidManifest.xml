@@ -30,7 +30,8 @@
         <activity android:name=".CrosswordsActivity" />
         <activity android:name=".ExplanationActivity" />
         <activity android:name=".OperationGameActivity" />
-        <activity android:name=".MagicsquareActivity" />
+        <activity android:name=".MagicSquareActivity" />
+        <activity android:name=".MagicSquareGameActivity" />
     </application>
 
 </manifest>

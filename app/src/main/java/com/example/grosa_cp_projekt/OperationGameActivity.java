@@ -212,7 +212,7 @@ public class OperationGameActivity extends GameActivity {
         }
     }
 
-    public void finish() {
+    public void finishAct() {
         // Update score:
         class UpdateGameScore extends AsyncTask<Void, Void, List<Score>> {
             @Override
@@ -259,7 +259,7 @@ public class OperationGameActivity extends GameActivity {
 
     public void onCheckResultButtonPushed(View view) {
         if (reviewMode) {
-            finish();
+            finishAct();
         } else {
             int errorNb = 0;
             for (OperationResult operationResult : operationResults) {
@@ -287,7 +287,7 @@ public class OperationGameActivity extends GameActivity {
             scoreFinal = (int)round(ceil(Double.valueOf(scoreVal) * Double.valueOf(operationResults.size() - errorNb)/Double.valueOf(operationResults.size())));
 
             if (errorNb == 0) {
-                finish();
+                finishAct();
             } else {
                 Button checkButton = findViewById(R.id.check_button);
                 checkButton.setText(getString(R.string.continue_));

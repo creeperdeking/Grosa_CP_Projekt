@@ -51,4 +51,6 @@
     <string name="help">Aide</string>
     <string name="verify">Vérifier les réponses</string>
     <string name="never_give_up">Courage! Tu feras mieux la prochaine fois!</string>
+    <string name="magicsquare_title">Faites en sorte que les sommes des colonnes et des lignes soient les mêmes!</string>
+    <string name="magicsquare_clue">Indication: la somme doit être</string>
 </resources>

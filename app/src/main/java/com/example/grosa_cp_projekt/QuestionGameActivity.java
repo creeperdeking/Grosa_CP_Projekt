@@ -41,18 +41,16 @@ public class QuestionGameActivity extends GameActivity {
         topic = QuestionsActivity.Topic.valueOf(getIntent().getStringExtra(EXTRA_PARAMETERS_KEY));
         difficulty = ChooseDifficulty.Difficulty.valueOf(getIntent().getStringExtra(DIFFICULTY_KEY));
         mDb = DatabaseClient.getInstance(this);
-        System.out.println("Topic: "+ topic.toString());
 
         questions = Questions.getQuestions(topic, difficulty);
         Collections.shuffle(questions);
-        System.out.println(questions.size());
 
         showQuestion(numCurrentQuestion);
     }
 
     private void showQuestion(Integer numQuestion) {
         if (numQuestion == questions.size()) {
-            finish();
+            finishAct();
         } else {
             Questions.Question currentQuestion = questions.get(numQuestion);
             TextView pageNbView = findViewById(R.id.page_number);
@@ -79,7 +77,7 @@ public class QuestionGameActivity extends GameActivity {
 
     }
 
-    public void finish() {
+    public void finishAct() {
         final Integer scoreVal;
         switch (difficulty) {
             case EASY:

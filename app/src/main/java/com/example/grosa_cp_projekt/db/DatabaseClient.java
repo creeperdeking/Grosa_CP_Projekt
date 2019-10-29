@@ -62,16 +62,16 @@ public class DatabaseClient {
             db.execSQL("INSERT INTO game (game_name_id, image_id, explanation_id, activity_classname) " +
                     "VALUES(\"" + R.string.questions_game_name + "\", "+ R.drawable.questions +", \"" + R.string.explanation_questions + "\", \"com.example.grosa_cp_projekt.QuestionsActivity\");");
             db.execSQL("INSERT INTO game (game_name_id, image_id, explanation_id, activity_classname) " +
-                    "VALUES(\"" + R.string.magic_square_game_name + "\", "+ R.drawable.magicsquare +", \"" + R.string.explanation_magicsquare + "\", \"com.example.grosa_cp_projekt.MagicsquareActivity\");");
-            db.execSQL("INSERT INTO game (game_name_id, image_id, explanation_id, activity_classname) " +
-                    "VALUES(\"" + R.string.crossed_words_game_name + "\", "+ R.drawable.crossword +", \"" + R.string.explanation_crossedWords + "\", \"com.example.grosa_cp_projekt.CrosswordsActivity\");");
+                    "VALUES(\"" + R.string.magic_square_game_name + "\", "+ R.drawable.magicsquare +", \"" + R.string.explanation_magicsquare + "\", \"com.example.grosa_cp_projekt.MagicSquareActivity\");");
+            //db.execSQL("INSERT INTO game (game_name_id, image_id, explanation_id, activity_classname) " +
+            //        "VALUES(\"" + R.string.crossed_words_game_name + "\", "+ R.drawable.crossword +", \"" + R.string.explanation_crossedWords + "\", \"com.example.grosa_cp_projekt.CrosswordsActivity\");");
 
             db.execSQL("INSERT INTO user (name, surname, image_id) VALUES(\"Anne\", \"Eonym\", " + R.drawable.user_1 +");");
 
             db.execSQL("INSERT INTO score (user_id, game_id, score) VALUES((SELECT id FROM user WHERE name=\"Anne\" LIMIT 1), (SELECT id FROM game WHERE game_name_id=\"" + R.string.operation_game_name + "\"LIMIT 1), 10);");
             db.execSQL("INSERT INTO score (user_id, game_id, score) VALUES((SELECT id FROM user WHERE name=\"Anne\" LIMIT 1), (SELECT id FROM game WHERE game_name_id=\"" + R.string.questions_game_name + "\"LIMIT 1), 10);");
             db.execSQL("INSERT INTO score (user_id, game_id, score) VALUES((SELECT id FROM user WHERE name=\"Anne\" LIMIT 1), (SELECT id FROM game WHERE game_name_id=\"" + R.string.magic_square_game_name + "\"LIMIT 1), 10);");
-            db.execSQL("INSERT INTO score (user_id, game_id, score) VALUES((SELECT id FROM user WHERE name=\"Anne\" LIMIT 1), (SELECT id FROM game WHERE game_name_id=\"" + R.string.crossed_words_game_name + "\"LIMIT 1), 10);");
+            //db.execSQL("INSERT INTO score (user_id, game_id, score) VALUES((SELECT id FROM user WHERE name=\"Anne\" LIMIT 1), (SELECT id FROM game WHERE game_name_id=\"" + R.string.crossed_words_game_name + "\"LIMIT 1), 10);");
 
         }
     };
